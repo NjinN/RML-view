@@ -1,4 +1,4 @@
-module github.com/NjinN/RML/go
+module github.com/NjinN/RML-view
 
 go 1.11
 

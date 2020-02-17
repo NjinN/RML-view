@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 )
 
 func Cost(es *EvalStack, ctx *BindMap) (*Token, error) {

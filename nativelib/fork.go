@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 )
 
 func forkEval(inp []*Token, ctx *BindMap, wg *sync.WaitGroup, wait bool, waiter *Token, stackLen int) {

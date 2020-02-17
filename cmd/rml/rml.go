@@ -10,12 +10,13 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/NjinN/RML/go/core"
-	. "github.com/NjinN/RML/go/extlib"
-	. "github.com/NjinN/RML/go/nativelib"
-	. "github.com/NjinN/RML/go/oplib"
+	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML-view/extlib"
+	. "github.com/NjinN/RML-view/nativelib"
+	. "github.com/NjinN/RML-view/oplib"
+	. "github.com/NjinN/RML-view/viewlib"
 
-	"github.com/NjinN/RML/go/script"
+	"github.com/NjinN/RML-view/script"
 )
 
 func main() {
@@ -29,6 +30,7 @@ func main() {
 	InitNative(&libCtx)
 	InitOp(&libCtx)
 	InitExt(&libCtx)
+	InitView(&libCtx)
 
 	var es = EvalStack{
 		MainCtx: &libCtx,

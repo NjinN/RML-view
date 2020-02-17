@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"sync"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 )
 
 func Quit(es *EvalStack, ctx *BindMap) (*Token, error) {

@@ -1,6 +1,6 @@
 package nativelib
 
-import . "github.com/NjinN/RML/go/core"
+import . "github.com/NjinN/RML-view/core"
 
 func Eq(es *EvalStack, ctx *BindMap) (*Token, error) {
 	var args = es.Line[es.LastStartPos() : es.LastEndPos()]

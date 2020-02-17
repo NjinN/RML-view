@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 
 	"fmt"
 	"reflect"

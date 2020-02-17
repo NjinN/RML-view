@@ -7,7 +7,7 @@ import (
 	// "encoding/hex"
 	// "fmt"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 )
 
 func To(es *EvalStack, ctx *BindMap) (*Token, error) {

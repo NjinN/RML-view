@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	. "github.com/NjinN/RML/go/core"
+	. "github.com/NjinN/RML-view/core"
 )
 
 // import "fmt"

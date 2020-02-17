@@ -1,6 +1,6 @@
 package nativelib
 
-import . "github.com/NjinN/RML/go/core"
+import . "github.com/NjinN/RML-view/core"
 
 func fibonacci(n int) int {
 	if n < 2 {

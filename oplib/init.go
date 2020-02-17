@@ -1,8 +1,8 @@
 package oplib
 
 import (
-	. "github.com/NjinN/RML/go/core"
-	. "github.com/NjinN/RML/go/nativelib"
+	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML-view/nativelib"
 )
 
 func InitOp(ctx *BindMap) {

@@ -2,16 +2,16 @@ package nativelib
 
 import . "github.com/NjinN/RML-view/core"
 
-func InitExt(ctx *BindMap) {
-	var fibToken = Token{
+func InitView(ctx *BindMap) {
+	var viewToken = Token{
 		NATIVE,
 		Native{
-			"fib",
+			"view",
 			2,
-			Fib,
+			View,
 			nil,
 		},
 	}
-	ctx.PutNow("fib", &fibToken)
+	ctx.PutNow("view", &viewToken)
 
 }
