@@ -32,6 +32,18 @@ func (t *Token) Uint8() uint8{
 	return t.Val.(uint8)
 }
 
+func (t *Token) Uint64() int64{
+	return t.Val.(int64)
+}
+
+func (t *Token) Time() *TimeClock{
+	return t.Val.(*TimeClock)
+}
+
+func (t *Token) Timer() *Timer{
+	return t.Val.(*Timer)
+}
+
 func (t *Token) Float() float64{
 	return t.Val.(float64)
 }
@@ -91,6 +103,46 @@ func (t *Token) ToString() string{
 		return "%" + t.Str()
 	case BIN:
 		return "#{" + hex.EncodeToString(t.Val.([]byte)) + "}"
+	case TIME:
+		v := t.Time()
+		nega := ""
+		if v.Negative {
+			nega = "-"
+		}
+		if v.Date == 0 {
+			if v.FloatSecond > 0{
+				return nega + SecsToTimeStr(v.Second) + strconv.FormatFloat(v.FloatSecond, 'f', -1, 64)[1:]
+			}else{
+				return nega + SecsToTimeStr(v.Second)
+			}
+			
+		}else{
+			if v.FloatSecond > 0 {
+				return nega + DaysToDate(v.Date) + "+" + SecsToTimeStr(v.Second) + strconv.FormatFloat(v.FloatSecond, 'f', -1, 64)[1:]
+			}else{
+				return nega + DaysToDate(v.Date) + "+" + SecsToTimeStr(v.Second)
+			}
+			
+		}
+
+	case TIMER:
+		v := t.Timer()
+		var buffer bytes.Buffer
+		buffer.WriteString("!timer{")
+		buffer.WriteString(strconv.FormatFloat(v.Time, 'f', -1, 64))
+		buffer.WriteString(" [")
+		for _, item := range v.Code.List() {
+			buffer.WriteString(item.ToString())
+			buffer.WriteString(" ")
+		}
+		if len(buffer.Bytes()) > 1 {
+			buffer.Bytes()[len(buffer.Bytes())-1] = ']'
+		}else{
+			buffer.WriteString("]")
+		}
+		buffer.WriteString("}")
+		return buffer.String()
+
 	case URL:
 		return t.Str()
 	case RANGE:
@@ -154,6 +206,8 @@ func (t *Token) ToString() string{
 		return "native: " + t.Val.(Native).Str
 	case OP:
 		return "op: " + t.Val.(Native).Str
+	case MOP:
+		return "mop: " + t.Val.(Mop).Str
 	case FUNC:
 		var buffer bytes.Buffer
 		buffer.WriteString("!func{[")
@@ -304,6 +358,8 @@ func (t Token) Explen() int{
 		return t.Val.(Func).Args.Len() + 1
 	case OP:
 		return 3
+	case MOP:
+		return t.Val.(Mop).Explen
 	case PATH:
 		if t.IsGetPath() {
 			return 1
@@ -357,7 +413,7 @@ func (t *Token) GetPathVal(ctx *BindMap, es *EvalStack) (*Token, error){
 					result = result.Tks()[key.Int()-1]
 					continue
 				}else{
-					return &Token{ERR, "Error path!"}, nil
+					return &Token{ERR, "Error path of " + t.ToString()}, nil
 				}
 			}else if key.Tp == WORD || key.Tp == STRING {
 				var found = false
@@ -375,7 +431,7 @@ func (t *Token) GetPathVal(ctx *BindMap, es *EvalStack) (*Token, error){
 				result = &Token{NONE, nil}
 				continue
 			}
-			return &Token{ERR, "Error path!"}, nil
+			return &Token{ERR, "Error path of " + t.ToString()}, nil
 		}else if result.Tp == OBJECT || result.Tp == PORT {
 			if key.Tp == WORD || key.Tp == STRING {
 				result = result.Ctx().GetNow(key.ToString())
@@ -396,7 +452,7 @@ func (t *Token) GetPathVal(ctx *BindMap, es *EvalStack) (*Token, error){
 
 				continue
 			}
-			return &Token{ERR, "Error path!"}, nil
+			return &Token{ERR, "Error path of " + t.ToString()}, nil
 		}else if result.Tp == FUNC {
 			temp := Token{PATH, NewTks(8)}
 			temp.List().Add(result)
@@ -418,7 +474,7 @@ func (t *Token) GetPathVal(ctx *BindMap, es *EvalStack) (*Token, error){
 		}else if result.Tp == MAP {
 			return result.Map().Get(key), nil
 		}
-		return &Token{ERR, "Error path!"}, nil
+		return &Token{ERR, "Error path of " + t.ToString()}, nil
 	}
 
 	return result, nil

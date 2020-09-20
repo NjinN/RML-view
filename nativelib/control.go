@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML/go/core"
 )
 
 // import "fmt"
@@ -15,10 +15,11 @@ func Iif(es *EvalStack, ctx *BindMap) (*Token, error) {
 	var result Token
 	if args[1].ToBool() {
 		if args[2].Tp == BLOCK {
-			return es.Eval(args[2].Tks(), ctx)
+			es.Eval(args[2].Tks(), ctx)
 		} else if args[2].Tp == STRING {
-			return es.EvalStr(args[2].Str(), ctx)
+			es.EvalStr(args[2].Str(), ctx)
 		}
+		return &Token{LOGIC, true}, nil
 	} else {
 		return &Token{NIL, nil}, nil
 	}

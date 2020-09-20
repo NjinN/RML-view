@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML/go/core"
 )
 
 // import "fmt"

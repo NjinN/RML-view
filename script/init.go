@@ -53,6 +53,18 @@ print: func [n /inline /only] [
 	_打印 甲 行内 单独
 ]
 
+ask: func [msg /hide] [
+	_ask msg hide
+]
+
+输入为 术 [
+	"获取控制台输入"
+	信息	"提示信息, 字符串类型"
+	/隐藏	"无参，是否隐藏字符"
+	] [
+	_输入 信息 隐藏
+]
+
 insert*: func [serial item /at at /only] [
 	if not at [at: 1]
 	_insert serial item at only
@@ -448,7 +460,17 @@ lib?: func [/output output] [
 	_库? 输出
 ]
 
+include: func [target /to to] [
+	_include target to
+]
 
+包含为 术 [
+	"将目标对象的键值绑定包含到当前语境或指定对象中"
+	目标 	"要包含的目标对象"
+	/到 到 	"带参，指定要绑定到的对象"
+	] [
+	_包含 目标 到
+]
 
 
 

@@ -1,6 +1,6 @@
 package nativelib
 
-import . "github.com/NjinN/RML-view/core"
+import . "github.com/NjinN/RML/go/core"
 
 func InitExt(ctx *BindMap) {
 	var fibToken = Token{

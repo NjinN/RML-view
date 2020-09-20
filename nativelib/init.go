@@ -1,6 +1,6 @@
 package nativelib
 
-import . "github.com/NjinN/RML-view/core"
+import . "github.com/NjinN/RML/go/core"
 
 func InitNative(ctx *BindMap) {
 	/*******  sys  *******/
@@ -104,6 +104,17 @@ func InitNative(ctx *BindMap) {
 		},
 	}
 	ctx.PutNow("_print", &printToken)
+
+	var askToken = Token{
+		NATIVE,
+		Native{
+			"_ask",
+			3,
+			Ask,
+			nil,
+		},
+	}
+	ctx.PutNow("_ask", &askToken)
 
 	var letToken = Token{
 		NATIVE,
@@ -576,17 +587,6 @@ func InitNative(ctx *BindMap) {
 	}
 	ctx.PutNow("return", &returnToken)
 
-	var foreachToken = Token{
-		NATIVE,
-		Native{
-			"foreach",
-			4,
-			Fforeach,
-			[]int{0, 1, 1},
-		},
-	}
-	ctx.PutNow("foreach", &foreachToken)
-
 	var tryToken = Token{
 		NATIVE,
 		Native{
@@ -692,6 +692,61 @@ func InitNative(ctx *BindMap) {
 	}
 	ctx.PutNow("cost", &costToken)
 
+	var nowToken = Token{
+		NATIVE,
+		Native{
+			"now",
+			1,
+			Nnow,
+			nil,
+		},
+	}
+	ctx.PutNow("now", &nowToken)
+
+	var sleepToken = Token{
+		NATIVE,
+		Native{
+			"sleep",
+			2,
+			Ssleep,
+			nil,
+		},
+	}
+	ctx.PutNow("sleep", &sleepToken)
+
+	var timerToken = Token{
+		NATIVE,
+		Native{
+			"timer",
+			3,
+			Ttimer,
+			nil,
+		},
+	}
+	ctx.PutNow("timer", &timerToken)
+
+	var startToken = Token{
+		NATIVE,
+		Native{
+			"start",
+			2,
+			Sstart,
+			nil,
+		},
+	}
+	ctx.PutNow("start", &startToken)
+
+	var stopToken = Token{
+		NATIVE,
+		Native{
+			"stop",
+			2,
+			Sstop,
+			nil,
+		},
+	}
+	ctx.PutNow("stop", &stopToken)
+
 	/*******  collect  *******/
 
 	var lenToken = Token{
@@ -770,6 +825,30 @@ func InitNative(ctx *BindMap) {
 		},
 	}
 	ctx.PutNow("put", &putToken)
+	
+	var foreachToken = Token{
+		NATIVE,
+		Native{
+			"foreach",
+			4,
+			Fforeach,
+			[]int{0, 1, 1},
+		},
+	}
+	ctx.PutNow("foreach", &foreachToken)
+
+	var includeToken = Token{
+		NATIVE,
+		Native{
+			"_include",
+			3,
+			Include,
+			nil,
+		},
+	}
+	ctx.PutNow("_include", &includeToken)
+
+
 
 	/*******  fork  *******/
 	var forkToken = Token{
@@ -887,5 +966,29 @@ func InitNative(ctx *BindMap) {
 		},
 	}
 	ctx.PutNow("_readurl", &readUrlToken)
+
+
+	/*******  json  *******/
+	var jsonToken = Token{
+		NATIVE,
+		Native{
+			"json",
+			2,
+			Jjson,
+			nil,
+		},
+	}
+	ctx.PutNow("json", &jsonToken)
+
+	var dejsonToken = Token{
+		NATIVE,
+		Native{
+			"dejson",
+			2,
+			Dejson,
+			nil,
+		},
+	}
+	ctx.PutNow("dejson", &dejsonToken)
 
 }

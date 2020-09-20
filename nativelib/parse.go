@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML/go/core"
 )
 
 const INT_MAX = int(^uint(0) >> 1)

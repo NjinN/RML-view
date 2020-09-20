@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	. "github.com/NjinN/RML-view/core"
+	. "github.com/NjinN/RML/go/core"
 
 	"fmt"
 	"reflect"
@@ -142,7 +142,17 @@ func listenConn(conn net.Conn, p *BindMap, es *EvalStack) {
 	p.GetNow("in-buffer").Val = make([]byte, 0)
 	p.GetNow("listening").Val = true
 	var buffer = make([]byte, bufferSize)
+
+
+
 	for {
+
+		if p.GetNow("read-timeout").Int() > 0{
+			conn.SetReadDeadline(time.Now().Add(time.Millisecond * time.Duration(p.GetNow("read-timeout").Int())))
+		}else{
+			conn.SetReadDeadline(time.Now().Add(time.Millisecond * time.Duration(200)))
+		}
+
 		n, err := conn.Read(buffer)
 		// fmt.Println("conn awake")
 		if err != nil {
@@ -166,7 +176,7 @@ func listenConn(conn net.Conn, p *BindMap, es *EvalStack) {
 					}
 				}
 
-				time.Sleep(time.Duration(200) * time.Millisecond)
+				// time.Sleep(time.Duration(200) * time.Millisecond)
 				continue
 			} else if strings.Contains(err.Error(), "use of closed network connection") || strings.Contains(err.Error(), "wsarecv") {
 				conn.Close()
@@ -508,8 +518,32 @@ func rowsPacker(rows *sql.Rows, colName bool) *Token {
 			switch reflect.TypeOf(item) {
 			case reflect.TypeOf(int(0)):
 				rst.List().Add(&Token{INTEGER, item.(int)})
+			case reflect.TypeOf(int8(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(int8))})
+			case reflect.TypeOf(int16(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(int16))})
+			case reflect.TypeOf(int32(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(int32))})
 			case reflect.TypeOf(int64(0)):
 				rst.List().Add(&Token{INTEGER, int(item.(int64))})
+			case reflect.TypeOf(uint(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(uint))})
+			case reflect.TypeOf(uint8(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(uint8))})
+			case reflect.TypeOf(uint16(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(uint16))})
+			case reflect.TypeOf(uint32(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(uint32))})
+			case reflect.TypeOf(uint64(0)):
+				rst.List().Add(&Token{INTEGER, int(item.(uint64))})
+			case reflect.TypeOf(false):
+				rst.List().Add(&Token{LOGIC, item.(bool)})
+			case reflect.TypeOf(byte('0')):
+				rst.List().Add(&Token{BIN, item.(byte)})
+			case reflect.TypeOf(rune('0')):
+				rst.List().Add(&Token{CHAR, item.(rune)})
+			case reflect.TypeOf(time.Now()):
+				rst.List().Add(&Token{TIME, ParseTimeStr(item.(time.Time).Format("2006-01-02+15:04:05"))})
 			case reflect.TypeOf(float64(0.0)):
 				rst.List().Add(&Token{DECIMAL, item.(float64)})
 			case reflect.TypeOf(float32(0.0)):

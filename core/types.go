@@ -14,6 +14,8 @@ const (
 	STRING
 	FILE
 	BIN
+	TIME
+	TIMER
 	URL
 	PORT
 	RANGE 		
@@ -27,7 +29,8 @@ const (
 	SET_WORD
 	PUT_WORD 		
 	PATH 			
-	OP 			
+	OP
+	MOP 			
 	NATIVE 		
 	FUNC
 
@@ -62,6 +65,10 @@ func TypeToStr(n uint8) string{
 		return "file!"
 	case BIN:
 		return "bin!"
+	case TIME:
+		return "time!"
+	case TIMER:
+		return "timer!"
 	case URL:
 		return "url!"
 	case PORT:
@@ -90,6 +97,8 @@ func TypeToStr(n uint8) string{
 		return "put-word!"
 	case OP:
 		return "op!"
+	case MOP:
+		return "mop!"
 	case NATIVE:
 		return "native!"
 	case FUNC:
@@ -128,6 +137,10 @@ func StrToType(s string) uint8{
 		return FILE
 	case "bin!":
 		return BIN
+	case "time!":
+		return TIME
+	case "timer!":
+		return TIMER
 	case "url!":
 		return URL
 	case "port!":
@@ -156,6 +169,8 @@ func StrToType(s string) uint8{
 		return PATH
 	case "op!":
 		return OP
+	case "mop!":
+		return MOP
 	case "native!":
 		return NATIVE
 	case "func!":
